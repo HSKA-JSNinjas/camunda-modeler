@@ -12,6 +12,9 @@
         "binding": {
           "type": "camunda:inputParameter",
           "target": "recipient"
+        },
+        "constraints": {
+          "notEmpty": true
         }
       },
       {
@@ -23,10 +26,13 @@
           "type": "camunda:inputParameter",
           "target": "messageBody",
           "scriptFormat": "freemarker"
+        },
+        "constraints": {
+          "notEmpty": true
         }
       },
       {
-        "label": "Ergebnisvariable",
+        "label": "Result Variable",
         "type": "String",
         "value": "mailResult",
         "binding": {
@@ -35,7 +41,7 @@
           "scriptFormat": "freemarker"
         },
         "constraints": {
-          "not-empty": true
+          "notEmpty": true
         }
       }
     ]
@@ -131,7 +137,7 @@
           "name": "webServiceUrl"
         },
         "constraints": {
-          "not-empty": true
+          "notEmpty": true
         }
       }
     ]
