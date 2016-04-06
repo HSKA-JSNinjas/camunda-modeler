@@ -27,6 +27,8 @@ var ensureOpts = require('util/ensure-opts'),
 
 var generateImage = require('app/util/generate-image');
 
+var validateElementTemplates = require('bpmn-js-properties-panel/lib/provider/camunda/element-templates/util/validate');
+
 var debug = require('debug')('bpmn-editor');
 
 
@@ -37,7 +39,10 @@ var debug = require('debug')('bpmn-editor');
  */
 function BpmnEditor(options) {
 
-  ensureOpts([ 'layout' ], options);
+  ensureOpts([
+    'layout',
+    'config'
+  ], options);
 
   DiagramEditor.call(this, options);
 
@@ -239,6 +244,14 @@ BpmnEditor.prototype.getModeler = function() {
 
 BpmnEditor.prototype.createModeler = function($el, $propertiesEl) {
 
+  var elementTemplates = this.config.get('bpmn.elementTemplates');
+
+  var errors = validateElementTemplates(elementTemplates);
+
+  if (errors.length) {
+    this.logTemplateWarnings(errors);
+  }
+
   var propertiesPanelConfig = {
     'config.propertiesPanel': [ 'value', { parent: $propertiesEl } ]
   };
@@ -253,6 +266,7 @@ BpmnEditor.prototype.createModeler = function($el, $propertiesEl) {
       propertiesProviderModule,
       propertiesPanelConfig
     ],
+    elementTemplates: elementTemplates,
     moddleExtensions: { camunda: camundaModdlePackage }
   });
 };
@@ -315,10 +329,24 @@ BpmnEditor.prototype.render = function() {
         </div>
       </div>
       <WarningsOverlay warnings={ warnings }
-                       onShowDetails={ this.compose('openLogger') }
+                       onShowDetails={ this.compose('openLog') }
                        onClose={ this.compose('hideWarnings') } />
     </div>
   );
+};
+
+BpmnEditor.prototype.logTemplateWarnings = function(warnings) {
+
+  var messages = warnings.map(function(warning) {
+    return [ 'warning', '> ' + warning.message ];
+  });
+
+  // prepend summary message
+  messages.unshift([ 'warning', 'Some element templates could not be parsed' ]);
+
+  messages.push([ 'warning', '' ]);
+
+  this.log(messages, true);
 };
 
 /**
