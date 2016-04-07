@@ -14,7 +14,9 @@
           "target": "recipient"
         },
         "constraints": {
-          "notEmpty": true
+          "notEmpty": true,
+          "minLength": 5,
+          "maxLength": 200
         }
       },
       {
@@ -28,7 +30,11 @@
           "scriptFormat": "freemarker"
         },
         "constraints": {
-          "notEmpty": true
+          "notEmpty": true,
+          "pattern": {
+            "value": "Hello",
+            "message": "Must contain 'Hello'. Be friendly!"
+          }
         }
       },
       {
@@ -88,6 +94,9 @@
         "binding": {
           "type": "property",
           "target": "camunda:delegateExpression"
+        },
+        "constrains": {
+          "notEmpty": true
         }
       }
     ],
@@ -122,7 +131,7 @@
     ]
   },
   {
-    "label": "Custom Whatever",
+    "label": "Custom WS Task",
     "id": "com.mycompany.WsCaller",
     "appliesTo": [
       "bpmn:ServiceTask"
@@ -137,7 +146,11 @@
           "name": "webServiceUrl"
         },
         "constraints": {
-          "notEmpty": true
+          "notEmpty": true,
+          "pattern": {
+            "value": "^https://",
+            "message": "Must use HTTPS for web-service URL"
+          }
         }
       }
     ]
