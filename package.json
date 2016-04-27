@@ -38,6 +38,7 @@
     "assert": "~1.3.0",
     "bootstrap": "^3.3.6",
     "bpmn-js": "^0.14.1",
+    "bpmn-js-nyan": "git+https://github.com/HSKA-JSNinjas/bpmn-js-nyan.git",
     "bpmn-js-properties-panel": "^0.6.2",
     "camunda-bpmn-moddle": "^0.3.0",
     "canvg-browser": "^1.0.0",

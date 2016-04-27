@@ -16,6 +16,10 @@ var diagramOriginModule = require('diagram-js-origin'),
     propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
     camundaModdlePackage = require('camunda-bpmn-moddle/resources/camunda');
 
+var nyanPaletteModule = require('bpmn-js-nyan/lib/nyan/palette'),
+    nyanDrawModule = require('bpmn-js-nyan/lib/nyan/draw');
+
+
 var WarningsOverlay = require('base/components/warnings-overlay');
 
 var getWarnings = require('app/util/get-warnings');
@@ -251,7 +255,9 @@ BpmnEditor.prototype.createModeler = function($el, $propertiesEl) {
       executableFixModule,
       propertiesPanelModule,
       propertiesProviderModule,
-      propertiesPanelConfig
+      propertiesPanelConfig,
+      nyanPaletteModule,
+      nyanDrawModule
     ],
     moddleExtensions: { camunda: camundaModdlePackage }
   });
